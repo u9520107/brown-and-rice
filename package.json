@@ -1,0 +1,33 @@
+{
+  "name": "brown-and-rice",
+  "version": "0.0.0",
+  "description": "brown-and-rice\r ==============",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/u9520107/brown-and-rice"
+  },
+  "author": "Jack Tzu-Chieh Huang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/u9520107/brown-and-rice/issues"
+  },
+  "homepage": "https://github.com/u9520107/brown-and-rice",
+  "devDependencies": {
+    "gulp": "^3.8.10",
+    "react-tools": "^0.12.1",
+    "traceur": "0.0.78"
+  },
+  "dependencies": {
+    "react": "^0.12.1"
+  },
+  "jspm": {
+    "configFile": "jspm_packages/config.js",
+    "dependencies": {
+      "react": "^0.12.1"
+    }
+  }
+}
