@@ -4,15 +4,15 @@ var path = require('path');
 var greasebox = require('greasebox');
 var co = require('co');
 
-gulp.task('harmony-clean-server', function (cb){
+gulp.task('gb-clean-server', function (cb){
   co(function *() {
-    if(yield cofs.exists(path.resolve(__dirname, '../build'))) {
-      yield greasebox.rm(path.resolve(__dirname, '../build'));
+    if(yield cofs.exists(path.resolve(__dirname, '../server'))) {
+      yield greasebox.rm(path.resolve(__dirname, '../server'));
     }
     cb();
   });
 });
-gulp.task('harmony-clean-dist', function (cb){
+gulp.task('gb-clean-dist', function (cb){
   co(function *() {
     if(yield cofs.exists(path.resolve(__dirname, '../dist'))) {
       yield greasebox.rm(path.resolve(__dirname, '../dist'));
@@ -21,7 +21,7 @@ gulp.task('harmony-clean-dist', function (cb){
   });
 });
 
-gulp.task('harmony-build-server', ['harmony-clean-server'], function (cb){
+gulp.task('gb-build-server', ['gb-clean-server'], function (cb){
   gulp.src(['src/**/*.js', 'src/**/*.jsx'])
     .pipe(greasebox.loadMap())
     .pipe(greasebox.jsxTransform())
@@ -32,11 +32,11 @@ gulp.task('harmony-build-server', ['harmony-clean-server'], function (cb){
       symbols: 'parse'
     }))
     .pipe(greasebox.writeMap())
-    .pipe(gulp.dest('build'))
+    .pipe(gulp.dest('server'))
     .on('end', cb);
 });
 
-gulp.task('harmony-build-dist', ['harmony-clean-dist'], function (cb){
+gulp.task('gb-build-dist', ['gb-clean-dist'], function (cb){
   gulp.src(['src/**/*.js', 'src/**/*.jsx'])
     .pipe(greasebox.loadMap())
     .pipe(greasebox.jsxTransform())
@@ -48,7 +48,7 @@ gulp.task('harmony-build-dist', ['harmony-clean-dist'], function (cb){
     .on('end', cb);
 });
 
-gulp.task('harmony-build-css', ['harmony-clean-dist'], function (cb) {
+gulp.task('gb-build-css', ['gb-clean-dist'], function (cb) {
   gulp.src(['src/**/*.styl'])
     .pipe(greasebox.loadMap())
     .pipe(greasebox.stylusTransform())
@@ -57,7 +57,7 @@ gulp.task('harmony-build-css', ['harmony-clean-dist'], function (cb) {
     .on('end', cb);
 });
 
-gulp.task('harmony-copy-files', ['harmony-clean-dist'], function (cb) {
+gulp.task('gb-copy-files', ['gb-clean-dist'], function (cb) {
   gulp.src([
     'src/**/*',
     '!src/**/*.js',

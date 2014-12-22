@@ -3,7 +3,7 @@ import Koa from 'koa';
 import serve from 'koa-static';
 import mount from 'koa-mount';
 import router from 'koa-router';
-import config from '../../config';
+import config from '../config';
 
 var app = new Koa();
 

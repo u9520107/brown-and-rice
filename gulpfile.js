@@ -13,14 +13,14 @@ if(isHarmony) {
   });
 }
 
-gulp.task('build', (isHarmony ? ['harmony-build-server', 'harmony-build-css', 'harmony-build-dist', 'harmony-copy-files'] : []), function () {
+gulp.task('build', (isHarmony ? ['gb-build-server', 'gb-build-css', 'gb-build-dist', 'gb-copy-files'] : []), function () {
   if(!isHarmony) {
     spawnTask('build');
   }
 });
 
 gulp.task('server', function () {
-    cp.spawn('node', ['--harmony', 'build/server/app'], {
+    cp.spawn('node', ['--harmony', 'server/app'], {
       stdio: 'inherit'
     });
 });
