@@ -7,11 +7,10 @@ import gzip from 'koa-gzip';
 import path from 'path';
 
 import * as config from './config';
-
 import RequireFilter from 'meepworks/require-filter';
 const requireFilter = new RequireFilter({
   fileRoot: __dirname,
-  urlRoot: '/assets/build'
+  urlRoot: '/build'
 });
 
 requireFilter.filter('.css!');
@@ -26,10 +25,13 @@ const port = process.env.PORT || 54321;
 
 server.use(gzip());
 
+server.use(function * (next) {
+  console.log(`request: ${this.req.url}`);
+  yield next;
+});
+
 server.use(favicon());
-server.use(mount('/assets/jspm_packages', path.resolve(__dirname, '../jspm_packages')));
-server.use(mount('/assets/build', __dirname) );
-server.use(mount('/assets/bundle', path.resolve(__dirname, '../bundle')));
+//server.use(mount('/assets/bundle', serve(path.resolve(__dirname, '../bundle'))));
 
 server.use(mount('/', new AppDriver(app, {
   appPath: 'app/app',
@@ -38,12 +40,19 @@ server.use(mount('/', new AppDriver(app, {
     config: 'jspm_packages/config.js'
   },
   distPath: {
-    external: 'assets/build',
+    external: 'build',
     internal: 'build'
   },
   fileRoot: __dirname,
-  urlRoot: '/assets/build'
+  rootUrl: '/build'
 })));
+
+server.use(mount('/jspm_packages', serve(path.resolve(__dirname, '../jspm_packages'), {
+  maxAge: 5*60*1000
+})));
+server.use(mount('/build', serve(__dirname, {
+  maxAge: 5*60*1000
+}) ));
 
 server.listen(port, () => {
   console.log(`listening to ${port}`);
